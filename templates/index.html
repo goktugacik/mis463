@@ -1,48 +1,53 @@
 <!doctype html>
 <html>
   <head>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainstyle.css') }}">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="{{url_for('static', filename='main.js')}}"></script>
-
+    <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='styles/mainstyle.css') }}">
   </head>
-<body>
-  <div class="container">
-    <div class="row">
+  <body>
+    <div class="container">
 
-
-
-    <div class="col formbox">
-      <form id="toAppend" action="{{ url_for('handle_data') }}" method="post">
-
-
-        <div class="form-row">
-          <button type="button" id="addButton" class="btn btn-dark">Add new destination</button>
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4">Router</h1>
+          <p class="lead">A travel destination optimizer.</p>
         </div>
+      </div>
 
-        <div class="form-row">
-          <div class="col-4">
-            <input type="text" name="city[]" class="form-control" placeholder="Start City">
-          </div>
-          <div class="col-4">
-            <input type="date" name="city[]">
-          </div>
-        </div>
+      <div class="card bg-light mb-6" style="max-width: 50%;">
+        <div class="card-header">Destinations</div>
+        <div class="card-body">
+              <form id="toAppend" action="{{ url_for('handle_data') }}" method="post">
 
-        <div class="form-row">
-          <input type="submit" id="calculateButton" class="btn btn-dark" value="Calculate">
-        </div>
+                <div class="form-row">
+                  <button type="button" id="addButton" class="btn btn-dark">Add new destination</button>
+                </div>
 
-      </form>
-    </div>
+                <div class="form-row">
+                  <div class="col-4">
+                    <input type="text" name="city[]" class="form-control" placeholder="Start City">
+                  </div>
+                  <div class="col-4">
+                    <input type="date" name="city[]">
+                  </div>
+                </div>
 
-    <div class="col formbox">
-    </div>
-  </div>
-  </div>
-</body>
-</html>
+                <div class="form-row">
+                  <input type="submit" id="calculateButton" class="btn btn-dark" value="Calculate">
+                </div>
+
+              </form>
+
+        </div> <!-- card body div close-->
+      </div>
+
+    </div> <!-- container div close-->
+
+  </body>
+  </html>
