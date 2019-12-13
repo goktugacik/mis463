@@ -21,7 +21,6 @@ MarkupSafe==1.1.0
 matplotlib==3.1.1
 more-itertools==7.2.0
 nbformat==4.4.0
-numpy==1.15.4
 numpy==1.16.5
 numpydoc==0.9.1
 olefile==0.46
