@@ -1,116 +1,97 @@
-  /* Göktuğ */
+/* Göktuğ */
 .form-row{
-    margin: 10px;
-  }
-
-  [list]::-webkit-calendar-picker-indicator {
-      display: none;
-    }
-    .ui-helper-hidden-accessible {
-        border: 0;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
-
-    .ui-autocomplete {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      z-index: 1000;
-      float: left;
-      display: none;
-      min-width: 160px;
-      _width: 160px;
-      padding: 4px 0;
-      margin: 2px 0 0 0;
-      list-style: none;
-      background-color: #ffffff;
-      border-color: #ccc;
-      border-color: rgba(0, 0, 0, 0.2);
-      border-style: solid;
-      border-width: 1px;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
-      -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-      -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-      -webkit-background-clip: padding-box;
-      -moz-background-clip: padding;
-      background-clip: padding-box;
-      *border-right-width: 2px;
-      *border-bottom-width: 2px;
-
-      .ui-menu-item > a.ui-corner-all {
-        display: block;
-        padding: 3px 15px;
-        clear: both;
-        font-weight: normal;
-        line-height: 18px;
-        color: #555555;
-        white-space: nowrap;
-
-        &.ui-state-hover, &.ui-state-active {
-          color: #ffffff;
-          text-decoration: none;
-          background-color: #0088cc;
-          border-radius: 0px;
-          -webkit-border-radius: 0px;
-          -moz-border-radius: 0px;
-          background-image: none;
-        }
-      }
-    }
-  /* ---- base ---- */
-
-  html,body{
-  	width:100%;
-  	height:100%;
-  	background:#111;
-  }
+  margin: 10px;
+}
 
 
-  body{
-    font:normal 75% Arial, Helvetica, sans-serif;
-  }
+/* ------------------------------------ BASE ------------------------------------ */
 
-  /* Removes the clear button from date inputs */
-  input[type="date"]::-webkit-clear-button {
-      display: none;
-  }
+html,body{
+  width:100%;
+  height:100%;
+  background:#111;
+}
 
-  /* Removes the spin button */
-  input[type="date"]::-webkit-inner-spin-button {
-      display: none;
-  }
 
-  /* Always display the drop down caret */
-  input[type="date"]::-webkit-calendar-picker-indicator {
-      color: #2c3e50;
-  }
+body{
+  font:normal 75% Arial, Helvetica, sans-serif;
+}
 
-  /* A few custom styles for date inputs */
-  input[type="date"] {
-      appearance: none;
-      -webkit-appearance: none;
-      color: #95a5a6;
-      font-family: "Helvetica", arial, sans-serif;
-      font-size: 18px;
-      border:1px solid #ecf0f1;
-      background:#ecf0f1;
-      padding:5px;
-      display: inline-block !important;
-      visibility: visible !important;
-  }
+/* ------------------------------------ DATE ------------------------------------ */
 
-  input[type="date"], focus {
-      color: #95a5a6;
-      box-shadow: none;
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-  }
+/* Removes the clear button from date inputs */
+input[type="date"]::-webkit-clear-button {
+  display: none;
+}
+/* Removes the spin button */
+input[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+/* Always display the drop down caret */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: #2c3e50;
+}
+/* A few custom styles for date inputs */
+input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+  color: #95a5a6;
+  font-family: "Helvetica", arial, sans-serif;
+  font-size: 18px;
+  border:1px solid #ecf0f1;
+  background:#ecf0f1;
+  padding:5px;
+  display: inline-block !important;
+  visibility: visible !important;
+}
+input[type="date"], focus {
+  color: #95a5a6;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+[list]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+/* ------------------------------------ AUTOCOMPLETE ------------------------------------ */
+
+.ui-helper-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.ui-autocomplete {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  float: left;
+  display: none;
+  min-width: 180px;
+  _width: 180px;
+  padding: 4px 0;
+  margin: 2px 0 0 0;
+  list-style-type:none;
+  border: solid 1px #e9ecef;
+  background-color: #f0f1f2;
+}
+
+.ui-autocomplete li {
+  font-family: Arial, Verdana, Sans-Serif;
+  margin: 1px;
+  cursor: pointer;
+  display: block;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+}
+
+.ui-autocomplete .ui-state-focus { background-color: #c0c1c1; }

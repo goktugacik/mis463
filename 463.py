@@ -153,12 +153,11 @@ def handle_data():
                 resultJSON[result_permutation[i+1]]["flight_cost"] = price
 
             except Exception as e:
-                    print("Flight Error: ",e)
+                    print("Flight Error2: ",e)
 
 
         return resultJSON
 
-    print(type(trace(l[0][1])))
 
     toReturn= { "Best": {"Total Cost": l[0][0], "Route Details": trace(l[0][1]) },
     "Second": {"Total Cost": l[1][0], "Route Details": trace(l[1][1]) }      }
