@@ -1,63 +1,71 @@
 <!doctype html>
 <html>
-  <head>
+<head>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="{{url_for('static', filename='main.js')}}"></script>
-    <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='styles/mainstyle.css') }}">
-  </head>
-  <body>
-    <div class="container">
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
-      <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-          <h1 class="display-4">Router</h1>
-          <p class="lead">A travel destination optimizer.</p>
+  <script src="{{url_for('static', filename='main.js')}}"></script>
+  <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='styles/mainstyle.css') }}">
+</head>
+<body>
+  <div class="container">
+
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Router</h1>
+        <p class="lead">A travel destination optimizer.</p>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="card-group">
+        <div class="card bg-light mb-6 m-5" style="width: 30rem;">
+          <div class="card-header"><h4 class="my-0 font-weight-normal">Destinations</h4></div>
+          <div class="card-body">
+            <form id="toAppend" action="{{ url_for('handle_data') }}" method="post">
+
+              <div class="form-row">
+                <button type="button" id="addButton" class="btn btn-dark">Add new destination</button>
+              </div>
+
+              <div class="form-row">
+                <div class="col-5">
+                  <input type="text" name="city[]" id="deneme" class="form-control city" placeholder="Start City" required>
+                </div>
+                <div class="col-5">
+                  <input type="date" id="datePicker"name="city[]" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                 <div class="col-5"> <input type="text" name="city[]" class="form-control city" placeholder="City" required> </div> <div class="col-4"> <input type="number" name="city[]" class="form-control" placeholder="Days" min="1" required> </div>
+              </div>
+              <div class="form-row">
+                 <div class="col-5"> <input type="text" name="city[]" class="form-control city" placeholder="City" required> </div> <div class="col-4"> <input type="number" name="city[]" class="form-control" placeholder="Days" min="1" required> </div>
+              </div>
+              <div class="form-row">
+                <input type="submit" id="calculateButton" class="btn btn-dark" value="Calculate">
+              </div>
+
+            </form>
+
+          </div> <!-- card body div close-->
+        </div>
+        <div class="card bg-light mb-6 m-5" style="width: 30rem;">
+          <div class="card-header"><h4 class="my-0 font-weight-normal">Results</h4></div>
+          <div class="card-body" id="results">
+
+
+          </div> <!-- card body div close-->
         </div>
       </div>
+    </div>
+  </div> <!-- container div close-->
 
-      <div class="row justify-content-center">
-        <div class="card-group">
-      <div class="card bg-light mb-6 m-5" style="width: 30rem;">
-        <div class="card-header"><h4 class="my-0 font-weight-normal">Destinations</h4></div>
-        <div class="card-body">
-              <form id="toAppend" action="{{ url_for('handle_data') }}" method="post">
-
-                <div class="form-row">
-                  <button type="button" id="addButton" class="btn btn-dark">Add new destination</button>
-                </div>
-
-                <div class="form-row">
-                  <div class="col-4">
-                    <input type="text" name="city[]" class="form-control" placeholder="Start City">
-                  </div>
-                  <div class="col-4">
-                    <input type="date" id="datePicker"name="city[]">
-                  </div>
-                </div>
-
-                <div class="form-row">
-                  <input type="submit" id="calculateButton" class="btn btn-dark" value="Calculate">
-                </div>
-
-              </form>
-
-        </div> <!-- card body div close-->
-              </div>
-              <div class="card bg-light mb-6 m-5" style="width: 30rem;">
-                <div class="card-header"><h4 class="my-0 font-weight-normal">Results</h4></div>
-                <div class="card-body" id="results">
-
-
-                </div> <!-- card body div close-->
-                      </div>
-</div>
-</div>
-    </div> <!-- container div close-->
-
-  </body>
-  </html>
+</body>
+</html>
