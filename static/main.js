@@ -52,14 +52,10 @@ $(document).ready(function(){
 
         $('#results').empty();
         var resultDate = new Date($('#datePicker').val());
-        $('#results').append( getFormattedDate(resultDate) );
-        $('#results').append( $('#startCity').val() );
+        $('#results').append( "<h5>You have started your journey</h5><br>" );
+        $('#results').append( "<h6><strong>on: </strong>" + getFormattedDate(resultDate)+ " " );
+        $('#results').append( "<strong>at: </strong>" + $('#startCity').val()+ "</h6> "  );
 
-        $('.form-control.city').each(function(){
-          var resultCity = $(this).val();
-
-          console.log();
-        });
 
         $('#results').append("<br> ***** <br>");
         $('#results').append(JSON.stringify(resultBest));
