@@ -110,7 +110,8 @@ def handle_data():
     for i in l:
         print(i)
 
-    def trace(result_permutation):
+    def trace(l,i,j):
+        result_permutation=l[i][j]
         resultJSON={}
         for cityName in result_permutation:
             resultJSON[cityName] = {"day":0,"hotel_cost":0,"flight_cost":0}
@@ -152,6 +153,7 @@ def handle_data():
                 resultJSON[result_permutation[i+1]]["day"] = day
                 resultJSON[result_permutation[i+1]]["flight_cost"] = price
 
+
             except Exception as e:
                     print("Flight Error2: ",e)
 
@@ -159,10 +161,9 @@ def handle_data():
         return resultJSON
 
 
-    toReturn= { "Best": {"Total Cost": l[0][0], "Route Details": trace(l[0][1]) },
-    "Second": {"Total Cost": l[1][0], "Route Details": trace(l[1][1]) }      }
+    toReturn= { "Best":  trace(l,0,1) , "Second":  trace(l,1,1) }
     if len(l)>2:
-        toReturn["Third"] = {"Total Cost": l[2][0], "Route Details": trace(l[2][1]) }
+        toReturn["Third"] =  trace(l,2,1) 
 
 
     return jsonify(toReturn)

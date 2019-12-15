@@ -31,14 +31,28 @@ $(document).ready(function(){
       data:$('#toAppend').serialize(),
       //When request returns a response
       success:function(response){
+        console.log(response);
+        console.log(typeof response +  " " + typeof response.Best);
+        var resultBest = response.Best;
 
-        var resultBest = JSON.stringify(response.Best);
-        console.console.log(typeof resultBest);
-        console.log(resultBest["Route Details"]);
+        var resultArray = [];
+
+        for(var i in resultBest){
+          var inner = []
+          for(var j in resultBest [i]){
+            inner.push(resultBest [i][j]);
+          }
+          inner.push(i);
+          resultArray.push(inner);
+        }
+
+        console.log("Before: " + resultArray);
+        resultArray.sort();
+        console.log(resultArray);
 
         $('#results').empty();
         var resultDate = new Date($('#datePicker').val());
-        $('#results').append( resultDate );
+        $('#results').append( getFormattedDate(resultDate) );
         $('#results').append( $('#startCity').val() );
 
         $('.form-control.city').each(function(){
@@ -48,7 +62,7 @@ $(document).ready(function(){
         });
 
         $('#results').append("<br> ***** <br>");
-        $('#results').append(resultBest);
+        $('#results').append(JSON.stringify(resultBest));
       }
     });
   });
@@ -80,4 +94,16 @@ function BindControls() {
       }
     }
   });
+}
+
+function getFormattedDate(date) {
+  var year = date.getFullYear();
+
+  var month = (1 + date.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+
+  return day + '/' + month + '/' + year;
 }
