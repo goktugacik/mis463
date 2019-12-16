@@ -3,7 +3,7 @@
   margin: 10px;
 }
 .jumbotron {
-background-color:#a7aabc !important;
+background-color:#f1f1e6 !important;
 }
 
 .card-body{
@@ -14,12 +14,17 @@ background-color:#f7f9ff !important;
 background-color:#f1f1e6 !important;
 }
 
+.myColor{
+    background-color:#3d5dcf !important;
+    color:#f1f1e6;
+}
+
 /* ------------------------------------ BASE ------------------------------------ */
 
 html,body{
   width:100%;
   height:100%;
-  background:#111;
+  background:#b5caff;
 }
 
 
