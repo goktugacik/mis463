@@ -31,6 +31,9 @@ $(document).ready(function(){
       data:$('#toAppend').serialize(),
       //When request returns a response
       success:function(response){
+        var totalCost = 0;
+        var totalFligtCost = 0;
+        var totalHotelCost = 0;
         console.log(response);
         console.log(typeof response +  " " + typeof response.Best);
         var resultBest = response.Best;
@@ -47,18 +50,36 @@ $(document).ready(function(){
         }
 
         console.log("Before: " + resultArray);
-        resultArray.sort();
+        resultArray.sort(function(a,b) {
+                        return a[0]-b[0]
+                    });
         console.log(resultArray);
 
         $('#results').empty();
         var resultDate = new Date($('#datePicker').val());
-        $('#results').append( "<h5>You have started your journey</h5><br>" );
-        $('#results').append( "<h6><strong>on: </strong>" + getFormattedDate(resultDate)+ " " );
-        $('#results').append( "<strong>at: </strong>" + $('#startCity').val()+ "</h6> "  );
+        resultDateFormatted = getFormattedDate(resultDate);
+        var currentCity = $('#startCity').val();
+        $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+resultDateFormatted+'</h6><p>You have started your trip from <strong>'+currentCity+'</strong> </p></div></div>' );
 
+        for (var i = 0; i < resultArray.length; i++)
+        { var cityArray = resultArray[i];
+          var day = cityArray[0];
+          var flightCost = cityArray[1];
+          var hotelCost = cityArray[2];
+          var currentCity = cityArray[3];
+          totalFligtCost += flightCost;
+          totalHotelCost += hotelCost;
+          totalCost += totalFligtCost+totalHotelCost;
+          currentDate = addDays(resultDate, day-1);
+          currentDate = getFormattedDate(currentDate);
+          if (i==resultArray.length-1)
+          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have returned to <strong>'+currentCity+' </strong></p><p>You have spent<strong> '+flightCost+'&#8378</strong>for this flight </p></div></div>' );
+          else if (i%2==1)
+          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied to <strong>'+currentCity+' </strong></p><p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accomodaiton </p></div></div>' );
+          else
+          $('#results').append( '<div class="timeContainer right"><div class="content"><h6>'+currentDate+'</h6><p>You have flied to <strong>'+currentCity+' </strong></p><p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accomodaiton </p></div></div>' );
+        }
 
-        $('#results').append("<br> ***** <br>");
-        $('#results').append(JSON.stringify(resultBest));
       }
     });
   });
@@ -102,4 +123,10 @@ function getFormattedDate(date) {
   day = day.length > 1 ? day : '0' + day;
 
   return day + '/' + month + '/' + year;
+}
+
+function addDays(date, days) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
 }
