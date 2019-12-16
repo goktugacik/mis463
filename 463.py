@@ -14,8 +14,8 @@ def index():
 @app.route('/handle_data', methods=['POST'])
 def handle_data():
     formData = request.form.getlist('city[]')
-    for i in formData:
-        print(i,type(i))
+    #for i in formData:
+    #    print(i,type(i))
 
     '''read hotel data'''
     path = "static/hotel.xlsx"
@@ -163,7 +163,7 @@ def handle_data():
 
     toReturn= { "Best":  trace(l,0,1) , "Second":  trace(l,1,1) }
     if len(l)>2:
-        toReturn["Third"] =  trace(l,2,1) 
+        toReturn["Third"] =  trace(l,2,1)
 
 
     return jsonify(toReturn)

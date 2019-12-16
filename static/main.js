@@ -6,6 +6,7 @@ $(document).ready(function(){
   //HTML code of the button to be added saved in a variable
   var calculateButtonHTML = '<div class="form-row"><input type="submit" id="calculateButton" class="btn myColor" value="Calculate"> </div>';
 
+
   //When add button is clicked
   $("#addButton").click(function(){
     $("#calculateButton").parent('div').remove();//Remove calculateButtonHTML
@@ -69,17 +70,21 @@ $(document).ready(function(){
           var currentCity = cityArray[3];
           totalFligtCost += flightCost;
           totalHotelCost += hotelCost;
-          totalCost += totalFligtCost+totalHotelCost;
+
           currentDate = addDays(resultDate, day-1);
           currentDate = getFormattedDate(currentDate);
           if (i==resultArray.length-1)
-          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have returned to <strong>'+currentCity+' </strong></p><p>You have spent<strong> '+flightCost+'&#8378</strong>for this flight </p></div></div>' );
+          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have returned to <strong>'+currentCity+' </strong></p><p>You have spent<strong> '+flightCost+'&#8378</strong> for this flight </p></div></div>' );
           else if (i%2==1)
           $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied to <strong>'+currentCity+' </strong></p><p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accomodaiton </p></div></div>' );
           else
           $('#results').append( '<div class="timeContainer right"><div class="content"><h6>'+currentDate+'</h6><p>You have flied to <strong>'+currentCity+' </strong></p><p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accomodaiton </p></div></div>' );
-        }
 
+        }
+        $('#results').prepend('<h6>Cost for flights: <span class="badge myColor">'+totalFligtCost+'₺</span></h6>');
+        $('#results').prepend('<h6>Cost for hotel: <span class="badge myColor">'+totalHotelCost+'₺</span></h6>');
+        totalCost=totalFligtCost+totalHotelCost;
+        $('#results').prepend('<h6>Total cost: <span class="badge myColor">'+totalCost+'₺</span></h6>');
       }
     });
   });
@@ -99,16 +104,33 @@ function BindControls() {
     "Barcelona",
     "London"
   ];
+  var selectedCities=[];
+  $('#toAppend *').filter(':input').each(function(){
+        selectedCities.push(this.value);
+    });
+  var difference = Cities.filter(x => !selectedCities.includes(x));
 
   $('.form-control.city').autocomplete({
-    source: Cities,
+
+    source: difference,
     minlength: 1,
     //If selected items value does not match an item from the list removes it
     change: function(event, ui) {
+      selectedCities=[];
+      $('#toAppend *').filter(':input').each(function(){
+            selectedCities.push(this.value);
+        });
+    difference = Cities.filter(x => !selectedCities.includes(x));
+    console.log(difference);
+
+    $('.form-control.city').autocomplete("option", { source: difference });
+
       if (ui.item == null) {
         $(this).val("");
         $(this).focus();
       }
+
+
     }
   });
 }

@@ -18,13 +18,22 @@ background-color:#f1f1e6 !important;
     background-color:#3d5dcf !important;
     color:#f1f1e6;
 }
+.myColor:hover {
+  color: #f2753f;
+}
 
 /* ------------------------------------ BASE ------------------------------------ */
 
 html,body{
   width:100%;
   height:100%;
-  background:#b5caff;
+  background: rgb(245,248,255);
+
+}
+
+.myBackground{
+  background: rgb(245,248,255);
+  background: linear-gradient(180deg, rgba(245,248,255,1) 25%, rgba(132,143,187,1) 80%, rgba(31,68,130,1) 100%);
 }
 
 
