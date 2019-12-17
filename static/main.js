@@ -38,6 +38,9 @@ $(document).ready(function(){
     $("#loadingOut").append('<div id="loadingIn" class="loadingio-spinner-spinner-i8ngzccnmes"><div class="ldio-art9qaeoagl"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>');
     var currentHeight =   $("#full").height() + $("#calculator").height();
     $("#particles-js").css({ 'height': currentHeight + "px" });
+    $('html, body').animate({
+      scrollTop: $("#results").offset().top
+    }, 1200);
     $.ajax({
       //Send a POST request to /handle_data URL
       url:'/handle_data',
