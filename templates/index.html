@@ -46,18 +46,11 @@
   <div class="myBackground" id="calculator">
   <div class="container">
 
-    <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <h1 class="display-4">Router</h1>
-        <p class="lead">A travel destination optimizer.</p>
-      </div>
-    </div>
-
     <div class="row justify-content-center">
       <div class="card-group">
         <div class="card mb-6 m-5" style="width: 30rem;">
           <div class="card-header"><h4 class="my-0 font-weight-normal">Destinations</h4></div>
-          <div class="card-body">
+          <div class="card-body align-items-center d-flex justify-content-center">
             <form id="toAppend" action="{{ url_for('handle_data') }}" method="post">
 
               <div class="form-row">
@@ -88,48 +81,65 @@
           </div> <!-- card body div close-->
         </div>
         <div class="card bg-light mb-6 m-5 " style="width: 30rem;">
-          <div class="card-header"><h4 class="my-0 font-weight-normal">Results</h4></div>
-          <div class="card-body" id="results">
-
+          <div class="card-header"><h4 class="my-0 font-weight-normal">Instructions</h4></div>
+          <div class="card-body align-items-center d-flex justify-content-center" id="help">
+                        <ul class="list-group">
+            <li class="list-group-item"><span class="badge myColor badge-pill">1</span>    Select your starting city (Where you are departing from, probably your location)</li>
+            <li class="list-group-item"><span class="badge myColor badge-pill">2</span>    Select your trip's start date date from calender located at right side of the starting city field</li>
+            <li class="list-group-item"><span class="badge myColor badge-pill">3</span>    Enter cities to visit and days you want to spend in those cities</li>
+            <li class="list-group-item"><span class="badge myColor badge-pill">4</span>    If you want you want add more destinations by clicking on "Add new destinations" button</li>
+            <li class="list-group-item"><span class="badge myColor badge-pill">5</span>    Click to calculate button in order to get your results</li>
+            </ul>
           </div> <!-- card body div close-->
         </div>
+
       </div>
+      <div class="card bg-light mb-6 m-5 " style="width: 40rem;">
+        <div class="card-header"><h4 class="my-0 font-weight-normal">Results</h4></div>
+        <div class="card-body" id="results">
+
+        </div> <!-- card body div close-->
+      </div>
+
     </div><!--- row div clsoe -->
 
 
   </div> <!-- container div close-->
 
-      <footer class="nameFooter">
-                <div class="container">
-                    <div class="row h-100">
-                        <div class="col-sm-2 my-auto">
-                            <img src="/static/img/router.png" alt="Router logo" width="75" height="75">
-                        </div>
 
-                        <div class="col-sm-2 my-auto">
-                            <h6>Göktuğ Açık</h6>
-
-                        </div>
-                        <div class="col-sm-2 my-auto">
-                            <h6>Berke Bora</h6>
-                        </div>
-                        <div class="col-sm-2 my-auto">
-                            <h6>Yalın Usanmaz</h6>
-                        </div>
-                        <div class="col-sm-2 my-auto">
-                            <h6>İpek Kaman</h6>
-                        </div>
-                        <div class="col-sm-2 my-auto">
-                            <h6>Altuğ Güzeloğlu</h6>
-                        </div>
-
-
-
-            <div></div>
-      </footer>
 
 
 </div> <!-- mybackground div close-->
+<div>
+  <footer class="nameFooter">
+            <div class="container">
+                <div class="row h-100">
+                    <div class="col-sm-2 my-auto">
+                        <img src="/static/img/router.png" alt="Router logo" width="75" height="75">
+                    </div>
+
+                    <div class="col-sm-2 my-auto">
+                        <h6>Göktuğ Açık</h6>
+
+                    </div>
+                    <div class="col-sm-2 my-auto">
+                        <h6>Berke Bora</h6>
+                    </div>
+                    <div class="col-sm-2 my-auto">
+                        <h6>Yalın Usanmaz</h6>
+                    </div>
+                    <div class="col-sm-2 my-auto">
+                        <h6>İpek Kaman</h6>
+                    </div>
+                    <div class="col-sm-2 my-auto">
+                        <h6>Altuğ Güzeloğlu</h6>
+                    </div>
+
+
+
+        <div></div>
+  </footer>
+</div>
 <script src="{{url_for('static', filename='particles.js')}}"></script>
 <script src="{{url_for('static', filename='app.js')}}"></script>
 </body>

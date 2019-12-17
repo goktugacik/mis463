@@ -12,14 +12,14 @@ particlesJS.load('particles-js', 'particles.json', function() {
 /* Otherwise just put the config content (json): */
 
 particlesJS('particles-js',
-  
+
   {
     "particles": {
       "number": {
-        "value": 80,
+        "value": 100,
         "density": {
           "enable": true,
-          "value_area": 800
+          "value_area": 1000
         }
       },
       "color": {
@@ -64,8 +64,8 @@ particlesJS('particles-js',
         "enable": true,
         "distance": 150,
         "color": "#ffffff",
-        "opacity": 0.4,
-        "width": 1
+        "opacity": 0.7,
+        "width": 2
       },
       "move": {
         "enable": true,

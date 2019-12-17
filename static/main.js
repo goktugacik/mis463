@@ -5,7 +5,8 @@ $(document).ready(function(){
   var fieldHTML = '<div class="form-row"><div class="col-5"> <input type="text" name="city[]" class="form-control city" placeholder="City" required> </div> <div class="col-4"> <input type="number" name="city[]" class="form-control" placeholder="Days" min="1" required> </div> <div class="col-2"> <button type="button" class="btn btn-danger remove">X</button> </div> </div> ';
   //HTML code of the button to be added saved in a variable
   var calculateButtonHTML = '<div class="form-row"><input type="submit" id="calculateButton" class="btn myColor" value="Calculate"> </div>';
-
+  var currentHeight =   $("#full").height() + $("#calculator").height();
+  $("#particles-js").css({ 'height': currentHeight + "px" });
 
   //When add button is clicked
   $("#addButton").click(function(){
@@ -13,6 +14,8 @@ $(document).ready(function(){
     $('#toAppend').append(fieldHTML); //Add field html
     $('#toAppend').append(calculateButtonHTML); //Add calculateButtonHTML
     BindControls(); //Add autocomplete to the new field
+    var currentHeight =   $("#full").height() + $("#calculator").height();
+    $("#particles-js").css({ 'height': currentHeight + "px" });
   });
 
   //When remove button is clicked
@@ -20,6 +23,8 @@ $(document).ready(function(){
     e.preventDefault(); //Prevent page from refreshing
     $(this).parent('div').parent('div').remove(); //Remove fieldHTML
     BindControls(); //Add autocomplete to the new field
+    var currentHeight =   $("#full").height() + $("#calculator").height();
+    $("#particles-js").css({ 'height': currentHeight + "px" });
   });
 
   //When the form is submitted
@@ -89,18 +94,23 @@ $(document).ready(function(){
 
 
         }
-        $('#results').prepend('<h6>Cost for flights: <span class="badge myColor">'+totalFligtCost+'₺</span></h6>');
-        $('#results').prepend('<h6>Cost for hotel: <span class="badge myColor">'+totalHotelCost+'₺</span></h6>');
+        var prependString=""
+        prependString += '<div class="row"><div class="col"><h4>Cost for flights: <span class="badge myColor">' + totalFligtCost + '₺</span></h4></div>' ;
+        prependString += '<div class="col"><h4>Cost for hotel: <span class="badge myColor">' + totalHotelCost + '₺</span></h4></div>' ;
         totalCost=totalFligtCost+totalHotelCost;
-        $('#results').prepend('<h6>Total cost: <span class="badge myColor">'+totalCost+'₺</span></h6>');
+        prependString += '<div class="col"><h4>Total cost: <span class="badge myColor">'+totalCost+'₺</span></h4></div></div>';
+        $('#results').prepend(prependString);
+
+        var currentHeight =   $("#full").height() + $("#calculator").height();
+        $("#particles-js").css({ 'height': currentHeight + "px" });
       }
     });
   });
 
   $("#scrollToDiv").click(function() {
-    $('html,body').animate({
-        scrollTop: $("#calculator").offset().top},
-        'slow');
+    $('html, body').animate({
+        scrollTop: $("#calculator").offset().top
+    }, 1200);
 });
 
 });
@@ -109,14 +119,14 @@ $(document).ready(function(){
 function BindControls() {
   var Cities = [
     "Amsterdam ",
-    "Vienna ",
+    "Barcelona ",
+    "Dublin ",
+    "London ",
     "Milan ",
     "Paris ",
     "Prague ",
     "Rome ",
-    "Dublin ",
-    "Barcelona ",
-    "London "
+    "Vienna "
   ];
   var selectedCities=[];
   $('#toAppend *').filter(':input').each(function(){
