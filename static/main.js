@@ -6,6 +6,7 @@ $(document).ready(function(){
   //HTML code of the button to be added saved in a variable
   var calculateButtonHTML = '<div class="form-row"><input type="submit" id="calculateButton" class="btn myColor" value="Calculate"> </div>';
   var currentHeight =   $("#full").height() + $("#calculator").height();
+  $('#results').append('<div id="loadingOut" class="row align-items-center d-flex justify-content-center"><h4>Your results will appear here</h4></div>');
   $("#particles-js").css({ 'height': currentHeight + "px" });
 
   //When add button is clicked
@@ -16,6 +17,7 @@ $(document).ready(function(){
     BindControls(); //Add autocomplete to the new field
     var currentHeight =   $("#full").height() + $("#calculator").height();
     $("#particles-js").css({ 'height': currentHeight + "px" });
+
   });
 
   //When remove button is clicked
@@ -30,6 +32,12 @@ $(document).ready(function(){
   //When the form is submitted
   $('#toAppend').submit(function(e){
     e.preventDefault();
+    $('#results').empty();
+    $('#results').append('<div id="loadingOut" class="row align-items-center d-flex justify-content-center"></div>');
+    $("#loadingOut").empty();
+    $("#loadingOut").append('<div id="loadingIn" class="loadingio-spinner-spinner-i8ngzccnmes"><div class="ldio-art9qaeoagl"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>');
+    var currentHeight =   $("#full").height() + $("#calculator").height();
+    $("#particles-js").css({ 'height': currentHeight + "px" });
     $.ajax({
       //Send a POST request to /handle_data URL
       url:'/handle_data',
@@ -61,7 +69,7 @@ $(document).ready(function(){
         });
         console.log(resultArray);
 
-        $('#results').empty();
+        $("#results").empty();
         var resultDate = new Date($('#datePicker').val());
         resultDateFormatted = getFormattedDate(resultDate);
         var currentCity = $('#startCity').val();
@@ -95,10 +103,10 @@ $(document).ready(function(){
 
         }
         var prependString=""
-        prependString += '<div class="row"><div class="col"><h4>Cost for flights: <span class="badge myColor">' + totalFligtCost + '₺</span></h4></div>' ;
-        prependString += '<div class="col"><h4>Cost for hotel: <span class="badge myColor">' + totalHotelCost + '₺</span></h4></div>' ;
+        prependString += '<div class="row"><div class="col"><h4>Cost for flights:<br> <span class="badge myColor">' + totalFligtCost + '₺</span></h4></div>' ;
+        prependString += '<div class="col"><h4>Cost for hotel:<br> <span class="badge myColor">' + totalHotelCost + '₺</span></h4></div>' ;
         totalCost=totalFligtCost+totalHotelCost;
-        prependString += '<div class="col"><h4>Total cost: <span class="badge myColor">'+totalCost+'₺</span></h4></div></div>';
+        prependString += '<div class="col"><h4>Total cost:<br> <span class="badge myColor">'+totalCost+'₺</span></h4></div></div>';
         $('#results').prepend(prependString);
 
         var currentHeight =   $("#full").height() + $("#calculator").height();
@@ -109,9 +117,9 @@ $(document).ready(function(){
 
   $("#scrollToDiv").click(function() {
     $('html, body').animate({
-        scrollTop: $("#calculator").offset().top
+      scrollTop: $("#calculator").offset().top
     }, 1200);
-});
+  });
 
 });
 
@@ -157,7 +165,7 @@ function BindControls() {
   }).focus(function() {
     console.log("current2"+$(this).val());
     $(this).autocomplete("search", " ");
-});
+  });
 
 
 
