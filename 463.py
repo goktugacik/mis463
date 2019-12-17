@@ -13,9 +13,10 @@ def index():
 
 @app.route('/handle_data', methods=['POST'])
 def handle_data():
-    formData = request.form.getlist('city[]')
-    #for i in formData:
-    #    print(i,type(i))
+    formData2 = request.form.getlist('city[]')
+    formData=[]
+    for i in formData2:
+        formData.append( i.strip() )
 
     '''read hotel data'''
     path = "static/hotel.xlsx"
@@ -75,9 +76,9 @@ def handle_data():
         permutation=list(permutation)
         permutation.insert(0,startCity)
         permutation.append(startCity)
-        #print("*",permutation)
+
         for i in range(0,len(permutation)-1):
-            #print("i:::::::::: ",i)
+
             try:
                 if permutation[i]==startCity:
                     day+=0
@@ -88,16 +89,16 @@ def handle_data():
 
                 price= int(row["price"])
                 flight_cost+=price
-                #print(i,"-",permutation[i],permutation[i+1],day,price)
+
 
             except Exception as e:
                 price= 9999
                 flight_cost+=price
                 print("Flight Error1: ",e)
 
-        #print(permutation,flight_cost)
+
         allP[permutationCopy]=flight_cost
-        #print("-----")
+
 
     '''Sum costs and order'''
     permutations=itertools.permutations(route)
@@ -107,8 +108,6 @@ def handle_data():
         p2=allP[permutation]
         l.append([p1+p2,permutation,p1,p2])
     l.sort(key=lambda x: x[0])
-    for i in l:
-        print(i)
 
     def trace(l,i,j):
         result_permutation=l[i][j]
@@ -139,16 +138,16 @@ def handle_data():
 
         day=startDay
         for i in range(0,len(result_permutation)-1):
+
             try:
+
                 if result_permutation[i]==startCity:
                     day+=0
                 else:
                     day+=route[result_permutation[i]]
 
                 row=flight.loc[flight['Departure'] == result_permutation[i]].loc[flight['Arrival'] == result_permutation[i+1]]
-                print(type(row))
                 row=row.loc[flight['date']==day].head(1)
-                print(type(row))
                 price= int(row["price"])
                 resultJSON[result_permutation[i+1]]["day"] = day
                 resultJSON[result_permutation[i+1]]["flight_cost"] = price

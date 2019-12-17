@@ -52,8 +52,8 @@ $(document).ready(function(){
 
         console.log("Before: " + resultArray);
         resultArray.sort(function(a,b) {
-                        return a[0]-b[0]
-                    });
+          return a[0]-b[0]
+        });
         console.log(resultArray);
 
         $('#results').empty();
@@ -73,12 +73,20 @@ $(document).ready(function(){
 
           currentDate = addDays(resultDate, day-1);
           currentDate = getFormattedDate(currentDate);
+
+          if(i>0){
+            var fromCityArray = resultArray[i-1];
+            var fromCity = fromCityArray[3];
+          }
+
+
           if (i==resultArray.length-1)
-          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have returned to <strong>'+currentCity+' </strong></p><p>You have spent<strong> '+flightCost+'&#8378</strong> for this flight </p></div></div>' );
-          else if (i%2==1)
-          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied to <strong>'+currentCity+' </strong></p><p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accomodaiton </p></div></div>' );
+          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied from <strong>'+fromCity+' </strong> to <strong>'+currentCity+' </strong></p><p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p></div></div>' );
+          else if(i==0)
+          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied from <strong>'+$('#startCity').val()+' </strong> to <strong>'+currentCity+' </strong></p><p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accommodation in <strong>'+currentCity+' </strong></p></div></div>' );
           else
-          $('#results').append( '<div class="timeContainer right"><div class="content"><h6>'+currentDate+'</h6><p>You have flied to <strong>'+currentCity+' </strong></p><p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accomodaiton </p></div></div>' );
+          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied from <strong>'+fromCity+' </strong> to <strong>'+currentCity+' </strong></p><p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accommodation in <strong>'+currentCity+' </strong> </p></div></div>' );
+
 
         }
         $('#results').prepend('<h6>Cost for flights: <span class="badge myColor">'+totalFligtCost+'₺</span></h6>');
@@ -89,50 +97,60 @@ $(document).ready(function(){
     });
   });
 
+  $("#scrollToDiv").click(function() {
+    $('html,body').animate({
+        scrollTop: $("#calculator").offset().top},
+        'slow');
+});
+
 });
 
 //Adds autocomplete to fields
 function BindControls() {
   var Cities = [
-    "Amsterdam",
-    "Vienna",
-    "Milan",
-    "Paris",
-    "Prague",
-    "Rome",
-    "Dublin",
-    "Barcelona",
-    "London"
+    "Amsterdam ",
+    "Vienna ",
+    "Milan ",
+    "Paris ",
+    "Prague ",
+    "Rome ",
+    "Dublin ",
+    "Barcelona ",
+    "London "
   ];
   var selectedCities=[];
   $('#toAppend *').filter(':input').each(function(){
-        selectedCities.push(this.value);
-    });
+    selectedCities.push(this.value);
+  });
   var difference = Cities.filter(x => !selectedCities.includes(x));
 
   $('.form-control.city').autocomplete({
-
+    minlength: 0,
     source: difference,
-    minlength: 1,
+
     //If selected items value does not match an item from the list removes it
     change: function(event, ui) {
       selectedCities=[];
       $('#toAppend *').filter(':input').each(function(){
-            selectedCities.push(this.value);
-        });
-    difference = Cities.filter(x => !selectedCities.includes(x));
-    console.log(difference);
+        selectedCities.push(this.value);
+      });
+      difference = Cities.filter(x => !selectedCities.includes(x));
+      console.log(difference);
 
-    $('.form-control.city').autocomplete("option", { source: difference });
+      $('.form-control.city').autocomplete("option", { source: difference });
 
       if (ui.item == null) {
         $(this).val("");
         $(this).focus();
       }
-
-
     }
-  });
+  }).focus(function() {
+    console.log("current2"+$(this).val());
+    $(this).autocomplete("search", " ");
+});
+
+
+
 }
 
 function getFormattedDate(date) {

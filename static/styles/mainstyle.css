@@ -1,4 +1,31 @@
 /* Göktuğ */
+#particles-js {
+    width: 100%;
+    height: 100vh;
+    background-color: #437993;
+    background-image: url("/static/img/bg.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    position: absolute;
+
+}
+
+canvas {
+    display: block;
+    vertical-align: bottom;
+}
+
+#full{
+  background-image: url("/static/img/bg.jpg");
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .form-row{
   margin: 10px;
 }
@@ -15,7 +42,7 @@ background-color:#f1f1e6 !important;
 }
 
 .myColor{
-    background-color:#3d5dcf !important;
+    background-color:#1f4482 !important;
     color:#f1f1e6;
 }
 .myColor:hover {
@@ -24,11 +51,9 @@ background-color:#f1f1e6 !important;
 
 /* ------------------------------------ BASE ------------------------------------ */
 
-html,body{
-  width:100%;
-  height:100%;
-  background: rgb(245,248,255);
 
+body {
+font:normal Arial, Helvetica, sans-serif;
 }
 
 .myBackground{
@@ -36,9 +61,15 @@ html,body{
   background: linear-gradient(180deg, rgba(245,248,255,1) 25%, rgba(132,143,187,1) 80%, rgba(31,68,130,1) 100%);
 }
 
+footer.nameFooter{
 
-body{
-  font:normal 85% Arial, Helvetica, sans-serif;
+  padding: 2%;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #f1f1e6;
+   text-align: center;
+
 }
 
 /* ------------------------------------ DATE ------------------------------------ */
@@ -119,7 +150,6 @@ input[type="date"], focus {
 }
 
 .ui-autocomplete .ui-state-focus { background-color: #c0c1c1; }
-
 /* ---------------- TIMELINE -------------------------- */
 .timeContainer {
   box-sizing: border-box;
