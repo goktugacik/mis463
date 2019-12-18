@@ -120,11 +120,16 @@ def handle_data():
         day=startDay
         for city in result_permutation:
             hotel_city_cost=0
+            row=hotel.loc[hotel['city'] == city].loc[hotel['startDay'] == day].head(1)
+            hotelName = row["hotelName"].to_string().split()[1:]
+            hotelName = " ".join(hotelName)
+            #print("HOTELHHOTELHOTEL",hotelName)
 
             for i in range(route[city]):
                 try:
                     row=hotel.loc[hotel['city'] == city].loc[hotel['startDay'] == day].head(1)
                     price= int(row["price"])
+
                     hotel_city_cost+=price
                     #print(city,day,price)
                     day+=1
@@ -132,6 +137,7 @@ def handle_data():
                     print(e)
 
             resultJSON[city]["hotel_cost"] = hotel_city_cost
+            resultJSON[city]["hotelName"] = hotelName
 
         result_permutation=list(result_permutation)
         result_permutation.insert(0,startCity)
@@ -148,20 +154,29 @@ def handle_data():
                     day+=route[result_permutation[i]]
 
                 row=flight.loc[flight['Departure'] == result_permutation[i]].loc[flight['Arrival'] == result_permutation[i+1]]
+
                 row=row.loc[flight['date']==day].head(1)
                 price= int(row["price"])
+                departureTime= row["departureTime"].to_string().split()[1]
+                arrivalTime = row["arrivalTime"].to_string().split()[1]
+                company = row["company"].to_string().split()[1:]
+                #print("******",company,type(company))
+                company = " ".join(company)
+                #print("******",company,type(company))
+
                 resultJSON[result_permutation[i+1]]["day"] = day
                 resultJSON[result_permutation[i+1]]["flight_cost"] = price
+                resultJSON[result_permutation[i+1]]["departureTime"] = departureTime
+                resultJSON[result_permutation[i+1]]["arrivalTime"] = arrivalTime
+                resultJSON[result_permutation[i+1]]["company"] = company
 
 
             except Exception as e:
-
                     print("Flight Error2: ",e)
-
 
         return resultJSON
 
-    print(l)
+
     toReturn= { "Best":  trace(l,0,1) , "Second":  trace(l,1,1) }
     if len(l)>2:
         toReturn["Third"] =  trace(l,2,1)

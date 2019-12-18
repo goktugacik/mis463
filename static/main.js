@@ -51,8 +51,8 @@ $(document).ready(function(){
         var totalCost = 0;
         var totalFligtCost = 0;
         var totalHotelCost = 0;
-        console.log(response);
-        console.log(typeof response +  " " + typeof response.Best);
+        //console.log(response);
+        //console.log(typeof response +  " " + typeof response.Best);
         var resultBest = response.Best;
 
         var resultArray = [];
@@ -66,10 +66,12 @@ $(document).ready(function(){
           resultArray.push(inner);
         }
 
-        console.log("Before: " + resultArray);
+
         resultArray.sort(function(a,b) {
-          return a[0]-b[0]
+          return a[2]-b[2]
         });
+        var lasT=resultArray[resultArray.length-1];
+        lasT.splice( 5, 0, lasT[lasT.length-1]);
         console.log(resultArray);
 
         $("#results").empty();
@@ -80,10 +82,14 @@ $(document).ready(function(){
 
         for (var i = 0; i < resultArray.length; i++)
         { var cityArray = resultArray[i];
-          var day = cityArray[0];
-          var flightCost = cityArray[1];
-          var hotelCost = cityArray[2];
-          var currentCity = cityArray[3];
+          var arrivalTime = cityArray[0];
+          var companyName = cityArray[1];
+          var day = cityArray[2];
+          var departureTime = cityArray[3];
+          var flightCost = cityArray[4];
+          var hotelName = cityArray[5];
+          var hotelCost = cityArray[6];
+          var currentCity = cityArray[7];
           totalFligtCost += flightCost;
           totalHotelCost += hotelCost;
 
@@ -92,17 +98,16 @@ $(document).ready(function(){
 
           if(i>0){
             var fromCityArray = resultArray[i-1];
-            var fromCity = fromCityArray[3];
+            var fromCity = fromCityArray[7];
           }
 
 
-          if (i==resultArray.length-1)
-          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied from <strong>'+fromCity+' </strong> to <strong>'+currentCity+' </strong></p><p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p></div></div>' );
-          else if(i==0)
-          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied from <strong>'+$('#startCity').val()+' </strong> to <strong>'+currentCity+' </strong></p><p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accommodation in <strong>'+currentCity+' </strong></p></div></div>' );
+         if (i==resultArray.length-1)
+           $('#results').append('<div class="timeContainer left"> <div class="content"> <h6>'+currentDate+'</h6> <p>You have flied from <strong>'+fromCity+' </strong> to <strong>'+currentCity+' </strong></p> <p>Flight Info > Departure: <strong>'+departureTime+' </strong> Arrival: <strong>'+arrivalTime+' </strong> Company: <strong>'+companyName+'</p></strong> <p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p> </div></div>');
+        else  if(i==0)
+          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied from <strong>'+$('#startCity').val()+' </strong> to <strong>'+currentCity+' </strong></p><p>Flight Info > Departure: <strong>'+departureTime+' </strong> Arrival: <strong>'+arrivalTime+' </strong> Company: <strong>'+companyName+'</p></strong> <p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accommodation in <strong>'+currentCity+' </strong> at <strong>'+hotelName+'</strong></p></div></div>' );
           else
-          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied from <strong>'+fromCity+' </strong> to <strong>'+currentCity+' </strong></p><p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accommodation in <strong>'+currentCity+' </strong> </p></div></div>' );
-
+            $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied from <strong>'+fromCity+' </strong> to <strong>'+currentCity+' </strong></p><p>Flight Info > Departure: <strong>'+departureTime+' </strong> Arrival: <strong>'+arrivalTime+' </strong> Company: <strong>'+companyName+'</p></strong> <p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accommodation in <strong>'+currentCity+' </strong> at <strong>'+hotelName+'</strong></p></div></div>' );
 
         }
         var prependString=""
@@ -156,7 +161,7 @@ function BindControls() {
         selectedCities.push(this.value);
       });
       difference = Cities.filter(x => !selectedCities.includes(x));
-      console.log(difference);
+      //console.log(difference);
 
       $('.form-control.city').autocomplete("option", { source: difference });
 
@@ -166,7 +171,7 @@ function BindControls() {
       }
     }
   }).focus(function() {
-    console.log("current2"+$(this).val());
+    //console.log("current2"+$(this).val());
     $(this).autocomplete("search", " ");
   });
 
