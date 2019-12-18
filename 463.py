@@ -84,6 +84,7 @@ def handle_data():
                     day+=0
                 else:
                     day+=route[permutation[i]]
+
                 row=flight.loc[flight['Departure'] == permutation[i]].loc[flight['Arrival'] == permutation[i+1]]
                 row=row.loc[flight['date']==day].head(1)
 
@@ -154,12 +155,13 @@ def handle_data():
 
 
             except Exception as e:
+
                     print("Flight Error2: ",e)
 
 
         return resultJSON
 
-
+    print(l)
     toReturn= { "Best":  trace(l,0,1) , "Second":  trace(l,1,1) }
     if len(l)>2:
         toReturn["Third"] =  trace(l,2,1)
