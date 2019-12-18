@@ -2,12 +2,14 @@
 <html>
 <head>
   <title>MIS463 Router</title>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+
 
   <script src="{{url_for('static', filename='main.js')}}"></script>
   <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='styles/mainstyle.css') }}">
@@ -21,20 +23,20 @@
       <div class="card-body">
         <div class="row justify-content-center align-items-center">
           <img src="/static/img/router.png" alt="Router logo" width="150" height="127.5">
-          </div>
-            <p><br></p>
-          <div class="row justify-content-center ">
+        </div>
+        <p><br></p>
+        <div class="row justify-content-center ">
 
           <p class="text-justify">Router is a travel destination optimizer.</p>
           <p class="text-justify">With Router, you will be able to schedule your trip with minimum cost.</p>
           <p class="text-justify">You can click to the button below to try Router.</p>
           <br>
 
-          </div>
-          <div class="row justify-content-center align-items-center">
+        </div>
+        <div class="row justify-content-center align-items-center">
 
           <button type="button" id="scrollToDiv" class="btn myColor">TRY ROUTER NOW!</button>
-          </div>
+        </div>
       </div>
     </div>
 
@@ -44,103 +46,156 @@
 
 
   <div class="myBackground" id="calculator">
-  <div class="container">
+    <div class="container">
 
-    <div class="row justify-content-center">
-      <div class="card-group">
-        <div class="card mb-6 m-5" style="width: 30rem;">
-          <div class="card-header"><h4 class="my-0 font-weight-normal">Destinations</h4></div>
-          <div class="card-body align-items-center d-flex justify-content-center">
-            <form id="toAppend" action="{{ url_for('handle_data') }}" method="post">
+      <div class="row justify-content-center">
+        <div class="card-group">
+          <div class="card mb-6 m-5" style="width: 30rem;">
+            <div class="card-header"><h4 class="my-0 font-weight-normal">Destinations</h4></div>
+            <div class="card-body align-items-center d-flex justify-content-center">
+              <form id="toAppend" action="{{ url_for('handle_data') }}" method="post">
 
-              <div class="form-row">
-                <button type="button" id="addButton" class="btn myColor">Add new destination</button>
-              </div>
-
-              <div class="form-row">
-                <div class="col-5">
-                  <input type="text" name="city[]" id="startCity" class="form-control city" placeholder="Start City" required>
+                <div class="form-row">
+                  <button type="button" id="addButton" class="btn myColor">Add new destination</button>
                 </div>
-                <div class="col-5">
-                  <input type="date" id="datePicker" name="city[]" required>
+
+                <div class="form-row">
+                  <div class="col-5">
+                    <input type="text" name="city[]" id="startCity" class="form-control city" placeholder="Start City" required>
+                  </div>
+                  <div class="col-5">
+                    <input type="date" id="datePicker" name="city[]" required>
+                  </div>
                 </div>
-              </div>
 
-              <div class="form-row">
-                <div class="col-5"> <input type="text" name="city[]" class="form-control city" placeholder="City" required> </div> <div class="col-4"> <input type="number" name="city[]" class="form-control" placeholder="Days" min="1" required> </div>
-              </div>
-              <div class="form-row">
-                <div class="col-5"> <input type="text" name="city[]" class="form-control city" placeholder="City" required> </div> <div class="col-4"> <input type="number" name="city[]" class="form-control" placeholder="Days" min="1" required> </div>
-              </div>
-              <div class="form-row">
-                <input type="submit" id="calculateButton" class="btn myColor" value="Calculate">
-              </div>
+                <div class="form-row">
+                  <div class="col-5"> <input type="text" name="city[]" class="form-control city" placeholder="City" required> </div> <div class="col-4"> <input type="number" name="city[]" class="form-control" placeholder="Days" min="1" required> </div>
+                </div>
+                <div class="form-row">
+                  <div class="col-5"> <input type="text" name="city[]" class="form-control city" placeholder="City" required> </div> <div class="col-4"> <input type="number" name="city[]" class="form-control" placeholder="Days" min="1" required> </div>
+                </div>
+                <div class="form-row">
+                  <input type="submit" id="calculateButton" class="btn myColor" value="Calculate">
+                </div>
 
-            </form>
+              </form>
+
+            </div> <!-- card body div close-->
+          </div>
+          <div class="card bg-light mb-6 m-5 " style="width: 30rem;">
+            <div class="card-header"><h4 class="my-0 font-weight-normal">Instructions</h4></div>
+            <div class="card-body align-items-center d-flex justify-content-center" id="help">
+              <ul class="list-group">
+                <li class="list-group-item"><span class="badge myColor badge-pill">1</span>    Select your starting city (Where you are departing from, probably your location)</li>
+                <li class="list-group-item"><span class="badge myColor badge-pill">2</span>    Select your trip's start date date from calender located at right side of the starting city field</li>
+                <li class="list-group-item"><span class="badge myColor badge-pill">3</span>    Enter cities to visit and days you want to spend in those cities</li>
+                <li class="list-group-item"><span class="badge myColor badge-pill">4</span>    If you want you want add more destinations by clicking on "Add new destinations" button</li>
+                <li class="list-group-item"><span class="badge myColor badge-pill">5</span>    Click to calculate button in order to get your results</li>
+              </ul>
+            </div> <!-- card body div close-->
+          </div>
+
+        </div>
+        <div class="card bg-light mb-6 m-5 " style="width: 70%;">
+          <div class="card-header"><h4 class="my-0 font-weight-normal">Results</h4></div>
+          <div class="card-body" id="results">
+            <div id="appearHere" class="row align-items-center d-flex justify-content-center"><h4>Your results will appear here</h4></div>
+            <div id="loadingOut" class="row align-items-center d-flex justify-content-center"></div>
+            <div id="accordion">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Best Result
+                </button>
+              </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body" id="results1" >
+
+              </div>
+            </div>
+          </div>
+          <div class="card" >
+            <div class="card-header" id="headingTwo">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Alternative Result 1
+                </button>
+              </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+              <div class="card-body" id="results2">
+
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h5 class="mb-0">
+                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Alternative Result 2
+                </button>
+              </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+              <div class="card-body" id="results3" >
+
+              </div>
+            </div>
+          </div>
+        </div>
+          </div><!--- row div clsoe -->
+
 
           </div> <!-- card body div close-->
         </div>
-        <div class="card bg-light mb-6 m-5 " style="width: 30rem;">
-          <div class="card-header"><h4 class="my-0 font-weight-normal">Instructions</h4></div>
-          <div class="card-body align-items-center d-flex justify-content-center" id="help">
-                        <ul class="list-group">
-            <li class="list-group-item"><span class="badge myColor badge-pill">1</span>    Select your starting city (Where you are departing from, probably your location)</li>
-            <li class="list-group-item"><span class="badge myColor badge-pill">2</span>    Select your trip's start date date from calender located at right side of the starting city field</li>
-            <li class="list-group-item"><span class="badge myColor badge-pill">3</span>    Enter cities to visit and days you want to spend in those cities</li>
-            <li class="list-group-item"><span class="badge myColor badge-pill">4</span>    If you want you want add more destinations by clicking on "Add new destinations" button</li>
-            <li class="list-group-item"><span class="badge myColor badge-pill">5</span>    Click to calculate button in order to get your results</li>
-            </ul>
-          </div> <!-- card body div close-->
-        </div>
 
+      </div><!--- row div clsoe -->
+
+
+    </div> <!-- container div close-->
+  </div> <!-- mybackground div close-->
+
+
+
+
+
+
+  <div>
+    <footer class="nameFooter">
+      <div class="container">
+        <div class="row h-100">
+          <div class="col-sm-2 my-auto">
+            <img src="/static/img/router.png" alt="Router logo" width="75" height="75">
+          </div>
+
+          <div class="col-sm-2 my-auto">
+            <h6>Göktuğ Açık</h6>
+
+          </div>
+          <div class="col-sm-2 my-auto">
+            <h6>Berke Bora</h6>
+          </div>
+          <div class="col-sm-2 my-auto">
+            <h6>Yalın Usanmaz</h6>
+          </div>
+          <div class="col-sm-2 my-auto">
+            <h6>İpek Kaman</h6>
+          </div>
+          <div class="col-sm-2 my-auto">
+            <h6>Altuğ Güzeloğlu</h6>
+          </div>
+
+
+
+          <div></div>
+        </footer>
       </div>
-      <div class="card bg-light mb-6 m-5 " style="width: 40rem;">
-        <div class="card-header"><h4 class="my-0 font-weight-normal">Results</h4></div>
-        <div class="card-body" id="results">
-          
-        </div> <!-- card body div close-->
-      </div>
-
-    </div><!--- row div clsoe -->
+      <script src="{{url_for('static', filename='particles.js')}}"></script>
+      <script src="{{url_for('static', filename='app.js')}}"></script>
 
 
-  </div> <!-- container div close-->
-
-
-
-
-</div> <!-- mybackground div close-->
-<div>
-  <footer class="nameFooter">
-            <div class="container">
-                <div class="row h-100">
-                    <div class="col-sm-2 my-auto">
-                        <img src="/static/img/router.png" alt="Router logo" width="75" height="75">
-                    </div>
-
-                    <div class="col-sm-2 my-auto">
-                        <h6>Göktuğ Açık</h6>
-
-                    </div>
-                    <div class="col-sm-2 my-auto">
-                        <h6>Berke Bora</h6>
-                    </div>
-                    <div class="col-sm-2 my-auto">
-                        <h6>Yalın Usanmaz</h6>
-                    </div>
-                    <div class="col-sm-2 my-auto">
-                        <h6>İpek Kaman</h6>
-                    </div>
-                    <div class="col-sm-2 my-auto">
-                        <h6>Altuğ Güzeloğlu</h6>
-                    </div>
-
-
-
-        <div></div>
-  </footer>
-</div>
-<script src="{{url_for('static', filename='particles.js')}}"></script>
-<script src="{{url_for('static', filename='app.js')}}"></script>
-</body>
-</html>
+    </body>
+    </html>

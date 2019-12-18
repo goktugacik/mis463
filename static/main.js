@@ -5,8 +5,13 @@ $(document).ready(function(){
   var fieldHTML = '<div class="form-row"><div class="col-5"> <input type="text" name="city[]" class="form-control city" placeholder="City" required> </div> <div class="col-4"> <input type="number" name="city[]" class="form-control" placeholder="Days" min="1" required> </div> <div class="col-2"> <button type="button" class="btn btn-danger remove">X</button> </div> </div> ';
   //HTML code of the button to be added saved in a variable
   var calculateButtonHTML = '<div class="form-row"><input type="submit" id="calculateButton" class="btn myColor" value="Calculate"> </div>';
+
+
+  $("#loadingOut").append('<div id="loadingIn" class="loadingio-spinner-spinner-i8ngzccnmes"><div class="ldio-art9qaeoagl"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>');
+  $("#loadingIn").hide();
+  $("#accordion").hide();
+
   var currentHeight =   $("#full").height() + $("#calculator").height();
-  $('#results').append('<div id="loadingOut" class="row align-items-center d-flex justify-content-center"><h4>Your results will appear here</h4></div>');
   $("#particles-js").css({ 'height': currentHeight + "px" });
 
   //When add button is clicked
@@ -32,10 +37,8 @@ $(document).ready(function(){
   //When the form is submitted
   $('#toAppend').submit(function(e){
     e.preventDefault();
-    $('#results').empty();
-    $('#results').append('<div id="loadingOut" class="row align-items-center d-flex justify-content-center"></div>');
-    $("#loadingOut").empty();
-    $("#loadingOut").append('<div id="loadingIn" class="loadingio-spinner-spinner-i8ngzccnmes"><div class="ldio-art9qaeoagl"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>');
+    $("#loadingIn").show();
+
     var currentHeight =   $("#full").height() + $("#calculator").height();
     $("#particles-js").css({ 'height': currentHeight + "px" });
     $('html, body').animate({
@@ -48,77 +51,34 @@ $(document).ready(function(){
       data:$('#toAppend').serialize(),
       //When request returns a response
       success:function(response){
-        var totalCost = 0;
-        var totalFligtCost = 0;
-        var totalHotelCost = 0;
-        //console.log(response);
-        //console.log(typeof response +  " " + typeof response.Best);
+        console.log( response);
+
         var resultBest = response.Best;
+        var resultSecond = response.Second;
+        var resultThird = response.Third;
+        console.log("Best");
+        console.log(resultBest);
+        console.log("Second");
+        console.log(resultSecond);
+        console.log("Third");
+        console.log(resultThird);
 
-        var resultArray = [];
+        $("#loadingIn").hide();
+        $("#appearHere").empty();
+        $("#appearHere").append('<h4>You can click on result to display your cost and timeline.</h4>');
+        $("#accordion").show();
 
-        for(var i in resultBest){
-          var inner = []
-          for(var j in resultBest [i]){
-            inner.push(resultBest [i][j]);
-          }
-          inner.push(i);
-          resultArray.push(inner);
+        fillResults(resultBest,"1");
+        fillResults(resultSecond,"2");
+        if (Object.keys(response).length > 2){
+          fillResults(resultThird,"3");
+        }
+        else {
+          $("#results3").append('<h4>There are only 2 results add more cities to get alternative routes.</h4>');
         }
 
 
-        resultArray.sort(function(a,b) {
-          return a[2]-b[2]
-        });
-        var lasT=resultArray[resultArray.length-1];
-        lasT.splice( 5, 0, lasT[lasT.length-1]);
-        console.log(resultArray);
 
-        $("#results").empty();
-        var resultDate = new Date($('#datePicker').val());
-        resultDateFormatted = getFormattedDate(resultDate);
-        var currentCity = $('#startCity').val();
-        $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+resultDateFormatted+'</h6><p>You have started your trip from <strong>'+currentCity+'</strong> </p></div></div>' );
-
-        for (var i = 0; i < resultArray.length; i++)
-        { var cityArray = resultArray[i];
-          var arrivalTime = cityArray[0];
-          var companyName = cityArray[1];
-          var day = cityArray[2];
-          var departureTime = cityArray[3];
-          var flightCost = cityArray[4];
-          var hotelName = cityArray[5];
-          var hotelCost = cityArray[6];
-          var currentCity = cityArray[7];
-          totalFligtCost += flightCost;
-          totalHotelCost += hotelCost;
-
-          currentDate = addDays(resultDate, day-1);
-          currentDate = getFormattedDate(currentDate);
-
-          if(i>0){
-            var fromCityArray = resultArray[i-1];
-            var fromCity = fromCityArray[7];
-          }
-
-
-         if (i==resultArray.length-1)
-           $('#results').append('<div class="timeContainer left"> <div class="content"> <h6>'+currentDate+'</h6> <p>You have flied from <strong>'+fromCity+' </strong> to <strong>'+currentCity+' </strong></p> <p>Flight Info > Departure: <strong>'+departureTime+' </strong> Arrival: <strong>'+arrivalTime+' </strong> Company: <strong>'+companyName+'</p></strong> <p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p> </div></div>');
-        else  if(i==0)
-          $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied from <strong>'+$('#startCity').val()+' </strong> to <strong>'+currentCity+' </strong></p><p>Flight Info > Departure: <strong>'+departureTime+' </strong> Arrival: <strong>'+arrivalTime+' </strong> Company: <strong>'+companyName+'</p></strong> <p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accommodation in <strong>'+currentCity+' </strong> at <strong>'+hotelName+'</strong></p></div></div>' );
-          else
-            $('#results').append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied from <strong>'+fromCity+' </strong> to <strong>'+currentCity+' </strong></p><p>Flight Info > Departure: <strong>'+departureTime+' </strong> Arrival: <strong>'+arrivalTime+' </strong> Company: <strong>'+companyName+'</p></strong> <p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accommodation in <strong>'+currentCity+' </strong> at <strong>'+hotelName+'</strong></p></div></div>' );
-
-        }
-        var prependString=""
-        prependString += '<div class="row"><div class="col"><h4>Cost for flights:<br> <span class="badge myColor">' + totalFligtCost + '₺</span></h4></div>' ;
-        prependString += '<div class="col"><h4>Cost for hotel:<br> <span class="badge myColor">' + totalHotelCost + '₺</span></h4></div>' ;
-        totalCost=totalFligtCost+totalHotelCost;
-        prependString += '<div class="col"><h4>Total cost:<br> <span class="badge myColor">'+totalCost+'₺</span></h4></div></div>';
-        $('#results').prepend(prependString);
-
-        var currentHeight =   $("#full").height() + $("#calculator").height();
-        $("#particles-js").css({ 'height': currentHeight + "px" });
       }
     });
   });
@@ -175,6 +135,19 @@ function BindControls() {
     $(this).autocomplete("search", " ");
   });
 
+  $(".collapse").on('shown.bs.collapse', function(){
+    console.log("shown");
+    var currentHeight =   $("#full").height() + $("#calculator").height();
+    console.log(currentHeight);
+    $("#particles-js").css({ 'height': currentHeight + "px" });
+  });
+
+  $(".collapse").on('hidden.bs.collapse', function(){
+    console.log("hidden");
+    var currentHeight =   $("#full").height() + $("#calculator").height();
+    console.log(currentHeight);
+    $("#particles-js").css({ 'height': currentHeight + "px" });
+  });
 
 
 }
@@ -195,4 +168,77 @@ function addDays(date, days) {
   var result = new Date(date);
   result.setDate(result.getDate() + days);
   return result;
+}
+
+function fillResults(resultBest,index){
+  var totalCost = 0;
+  var totalFligtCost = 0;
+  var totalHotelCost = 0;
+  var resultArray = [];
+  var selector = "#results"+index;
+
+  for(var i in resultBest){
+    var inner = []
+    for(var j in resultBest [i]){
+      inner.push(resultBest [i][j]);
+    }
+    inner.push(i);
+    resultArray.push(inner);
+  }
+
+
+  resultArray.sort(function(a,b) {
+    return a[2]-b[2]
+  });
+  var lasT=resultArray[resultArray.length-1];
+  lasT.splice( 5, 0, lasT[lasT.length-1]);
+  console.log(resultArray);
+
+  $(selector).empty();
+  var resultDate = new Date($('#datePicker').val());
+  resultDateFormatted = getFormattedDate(resultDate);
+  var currentCity = $('#startCity').val();
+  $(selector).append( '<div class="timeContainer left"><div class="content"><h6>'+resultDateFormatted+'</h6><p>You have started your trip from <strong>'+currentCity+'</strong> </p></div></div>' );
+
+  for (var i = 0; i < resultArray.length; i++)
+  { var cityArray = resultArray[i];
+    var arrivalTime = cityArray[0];
+    var companyName = cityArray[1];
+    var day = cityArray[2];
+    var departureTime = cityArray[3];
+    var flightCost = cityArray[4];
+    var hotelName = cityArray[5];
+    var hotelCost = cityArray[6];
+    var currentCity = cityArray[7];
+    totalFligtCost += flightCost;
+    totalHotelCost += hotelCost;
+
+    currentDate = addDays(resultDate, day-1);
+    currentDate = getFormattedDate(currentDate);
+
+    if(i>0){
+      var fromCityArray = resultArray[i-1];
+      var fromCity = fromCityArray[7];
+    }
+
+
+    if (i==resultArray.length-1)
+    $(selector).append('<div class="timeContainer left"> <div class="content"> <h6>'+currentDate+'</h6> <p>You have flied from <strong>'+fromCity+' </strong> to <strong>'+currentCity+' </strong></p> <p>Flight Info > Departure: <strong>'+departureTime+' </strong> Arrival: <strong>'+arrivalTime+' </strong> Company: <strong>'+companyName+'</p></strong> <p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p> </div></div>');
+    else  if(i==0)
+    $(selector).append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied from <strong>'+$('#startCity').val()+' </strong> to <strong>'+currentCity+' </strong></p><p>Flight Info > Departure: <strong>'+departureTime+' </strong> Arrival: <strong>'+arrivalTime+' </strong> Company: <strong>'+companyName+'</p></strong> <p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accommodation in <strong>'+currentCity+' </strong> at <strong>'+hotelName+'</strong></p></div></div>' );
+    else
+    $(selector).append( '<div class="timeContainer left"><div class="content"><h6>'+currentDate+'</h6><p>You have flied from <strong>'+fromCity+' </strong> to <strong>'+currentCity+' </strong></p><p>Flight Info > Departure: <strong>'+departureTime+' </strong> Arrival: <strong>'+arrivalTime+' </strong> Company: <strong>'+companyName+'</p></strong> <p>You have spent <strong>'+flightCost+'&#8378</strong> for this flight </p><p>You have spent <strong>'+hotelCost+'&#8378</strong> for accommodation in <strong>'+currentCity+' </strong> at <strong>'+hotelName+'</strong></p></div></div>' );
+
+  }
+  var prependString=""
+  prependString += '<div class="row"><div class="col"><h4>Cost for flights:<br> <span class="badge myColor">' + totalFligtCost + '₺</span></h4></div>' ;
+  prependString += '<div class="col"><h4>Cost for hotel:<br> <span class="badge myColor">' + totalHotelCost + '₺</span></h4></div>' ;
+  totalCost=totalFligtCost+totalHotelCost;
+  prependString += '<div class="col"><h4>Total cost:<br> <span class="badge myColor">'+totalCost+'₺</span></h4></div></div>';
+  $(selector).prepend(prependString);
+
+  var currentHeight =   $("#full").height() + $("#calculator").height();
+  $('#accordion').show();
+  $("#particles-js").css({ 'height': currentHeight + "px" });
+  return;
 }
